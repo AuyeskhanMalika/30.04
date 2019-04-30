@@ -23,7 +23,7 @@ namespace DapperNews
 
             var result = upgrader.PerformUpgrade();
 
-            if (!result.Successful) throw new Exception("Nu ne poluchilos. Soryan");
+            if (!result.Successful) throw new Exception("I am sorry. Not working");
             #endregion
 
 
