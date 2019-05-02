@@ -58,19 +58,32 @@ namespace DapperNews
 
             if (secondChoice == 1)
             {
-                using (var connection = new SqlConnection(connectionString))
+                if (int.TryParse(Console.ReadLine(), out int index))
                 {
-                    NewsComments newComment = new NewsComments();
-                    newComment.NewsId = id;
-                    Console.WriteLine("Enter your name");
-                    newComment.CommentAuthor = Console.ReadLine();
-                    Console.WriteLine("Enter your comment");
-                    newComment.Comment = Console.ReadLine();
-                    Console.WriteLine("Enter your name");
-                    newComment.DateOfCommentPosting = DateTime.Now;
-                   
+                    if (index > 0 && index <= news.Count)
+                    {
+                        string commentAuthor, comment;
+                        Guid id = news[index - 1].Id;
 
-                    connection.Execute("insert into NewsComments values(@CommentAuthor, @Comment, @DateOfCommentPosting)", newComment);
+                        Console.WriteLine("Enter your name: ");
+                        commentAuthor = Console.ReadLine();
+                        if (!string.IsNullOrWhiteSpace(commentAuthor))
+                        {
+                            Console.WriteLine("Enter your comment: ");
+                            comment = Console.ReadLine();
+
+                            using (var connection = new SqlConnection(connectionString))
+                            {
+                                NewsComments newscomment = new NewsComments();
+                                newscomment.NewsId = id;
+                                newscomment.CommentAuthor = commentAuthor;
+                                newscomment.Comment = comment;
+                                newscomment.DateOfCommentPosting = DateTime.Now;
+
+                                connection.Execute("insert into NewsComments values(@CommentAuthor, @Comment, @DateOfCommentPublishing, @NewsId)", newscomment);
+                            }
+                        }
+                    }
                 }
             }
         }

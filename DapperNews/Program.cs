@@ -26,7 +26,8 @@ namespace DapperNews
             if (!result.Successful) throw new Exception("I am sorry. Not working");
             #endregion
 
-
+            Menu menu = new Menu();
+            menu.Choices();
         }
     }
 }
